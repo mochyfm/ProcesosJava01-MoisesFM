@@ -39,4 +39,46 @@ public class ProcessUtils {
 
     }
 
+    public static void callTemporaryProcessNumber(int numberOfProcess, int timeToLive) {
+
+        ArrayList<Process> listOfProcess = new ArrayList<>(numberOfProcess);
+
+        ProcessBuilder process = new ProcessBuilder();
+        if (System.getProperty("os.name").startsWith("Windows")) {
+            process.command("cmd.exe", "/c", "C:\\Windows\\system32\\notepad.exe");
+        } else process.command("firefox");
+
+        System.out.println();
+
+        try {
+
+            int innerNumberOfProcess = numberOfProcess;
+
+
+            while (innerNumberOfProcess != 0) {
+                listOfProcess.add(process.start());
+                innerNumberOfProcess -= 1;
+            }
+
+            int processCounter = listOfProcess.size() - 1;
+
+            Thread.sleep(timeToLive);
+
+            while (listOfProcess.size() != 0) {
+                listOfProcess.get(processCounter).destroy();
+                listOfProcess.remove(processCounter);
+                processCounter--;
+            }
+
+            System.out.println("Proceso finalizado Existosamente, tus procesos han sido detenidos completamente (en total eran " + numberOfProcess + ")");
+
+        } catch (IOException exception) {
+            System.out.println("ERROR: Ha ocurrido un error durante la ejecución del programa.");
+        } catch (InterruptedException e) {
+            System.out.println("ERROR: Se ha interrumpido la pausa de " + timeToLive + " ms.");
+        }
+
+
+    }
+
 }
