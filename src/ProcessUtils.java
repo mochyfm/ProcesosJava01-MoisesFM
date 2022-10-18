@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
@@ -61,7 +62,9 @@ public class ProcessUtils {
                 InnitialTime = System.currentTimeMillis();
                 localProcess.waitFor(timeToLive, TimeUnit.MILLISECONDS);
                 long currentProcessTime = System.currentTimeMillis() - InnitialTime;
-                System.out.println("El proceso " + (innerNumberOfProcess + 1) + " ha durado: " + (System.currentTimeMillis() - InnitialTime) + " ms.");
+                System.out.println("\nHORA DE INICIO: " + LocalDateTime.now());
+                System.out.println(" · El proceso " + (innerNumberOfProcess + 1) + " ha durado: " + (System.currentTimeMillis() - InnitialTime) + " ms.");
+                System.out.println("HORA DE FIN: " + LocalDateTime.now() + "\n");
                 localProcess.destroyForcibly();
                 totalTime += currentProcessTime;
                 innerNumberOfProcess += 1;
