@@ -90,11 +90,11 @@ public class ProcessUtils {
             ProcessBuilder myBuildedProcess = new ProcessBuilder();
             if (System.getProperty("os.name").startsWith("Windows")) {
                 myBuildedProcess.command("cmd.exe", "/c" , "type", fileName, "|", "find", "/v", "/c", "", fileName);
-                myBuildedProcess.redirectOutput(ProcessBuilder.Redirect.INHERIT);
             } else myBuildedProcess.command("cat", fileName, "|", "wc", fileName);
 
             try {
 
+                myBuildedProcess.redirectOutput(ProcessBuilder.Redirect.INHERIT);
                 myBuildedProcess.start();
 
             } catch (IOException e) {
